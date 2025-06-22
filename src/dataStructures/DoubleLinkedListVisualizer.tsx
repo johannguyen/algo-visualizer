@@ -7,14 +7,14 @@ import styles from "./DoublyLinkedListVisualizer.module.css";
 export default function DoublyLinkedListVisualizer() {
   const [list] = useState(new DoublyLinkedList<string>());
   const [items, setItems] = useState<string[]>([]);
-  const [itemsReversed, setItemsReversed] = useState<string[]>([]);
   const [value, setValue] = useState("");
   const [index, setIndex] = useState("");
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
 
   const updateItems = useCallback(() => {
     setItems(list.toArray());
-    setItemsReversed(list.toArrayReverse());
   }, [list]);
 
   const setupDemo = useCallback(() => {
@@ -23,6 +23,7 @@ export default function DoublyLinkedListVisualizer() {
     list.insert("Track 2");
     list.insert("Track 3");
     updateItems();
+    setCurrentIndex(0);
   }, [list, updateItems]);
 
   useEffect(() => {
@@ -35,7 +36,24 @@ export default function DoublyLinkedListVisualizer() {
     }
   }, [items]);
 
-  const insertAtHead = () => {
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setCurrentIndex((prev) => {
+          if (prev === null || prev >= items.length - 1) {
+            clearInterval(interval);
+            setIsPlaying(false);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, items.length]);
+
+  const insertHead = () => {
     if (value.trim()) {
       list.insertAtHead(value.trim());
       setValue("");
@@ -43,7 +61,7 @@ export default function DoublyLinkedListVisualizer() {
     }
   };
 
-  const insertAtTail = () => {
+  const insertTail = () => {
     if (value.trim()) {
       list.insert(value.trim());
       setValue("");
@@ -51,7 +69,7 @@ export default function DoublyLinkedListVisualizer() {
     }
   };
 
-  const insertAtIndex = () => {
+  const insertAt = () => {
     const val = value.trim();
     const i = parseInt(index);
     if (val && !isNaN(i)) {
@@ -72,7 +90,7 @@ export default function DoublyLinkedListVisualizer() {
     updateItems();
   };
 
-  const removeAtIndex = () => {
+  const removeAt = () => {
     const i = parseInt(index);
     if (!isNaN(i)) {
       list.removeAt(i);
@@ -81,9 +99,24 @@ export default function DoublyLinkedListVisualizer() {
     }
   };
 
-  const clearList = () => {
+  const clear = () => {
     list.clear();
     updateItems();
+    setCurrentIndex(null);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => {
+      if (prev === null) return 0;
+      return Math.min(prev + 1, items.length - 1);
+    });
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => {
+      if (prev === null) return 0;
+      return Math.max(prev - 1, 0);
+    });
   };
 
   return (
@@ -92,7 +125,7 @@ export default function DoublyLinkedListVisualizer() {
         ← Back to Dashboard
       </Link>
 
-      <h2 className={styles.title}>🔁 Doubly Linked List Visualizer</h2>
+      <h2 className={styles.title}>🎵 Doubly Linked List Visualizer</h2>
       <p className={styles.meta}>
         Java: <code>LinkedList&lt;T&gt;</code> | .NET:{" "}
         <code>LinkedList&lt;T&gt;</code>
@@ -108,11 +141,17 @@ export default function DoublyLinkedListVisualizer() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className={styles.node}
+              className={`${styles.nodeContainer} ${
+                currentIndex === idx ? styles.highlighted : ""
+              }`}
             >
-              {val}
+              <div className={styles.nodeBox}>
+                <div className={styles.label}>← Prev</div>
+                <div className={styles.node}>{val}</div>
+                <div className={styles.label}>Next →</div>
+              </div>
               {idx < items.length - 1 && (
-                <span className={styles.arrow}>↔</span>
+                <div className={styles.arrowDouble}>↔</div>
               )}
             </motion.div>
           ))}
@@ -136,19 +175,19 @@ export default function DoublyLinkedListVisualizer() {
           />
 
           <button
-            onClick={insertAtHead}
+            onClick={insertHead}
             className={`${styles.button} ${styles.insert}`}
           >
             Insert Head
           </button>
           <button
-            onClick={insertAtTail}
+            onClick={insertTail}
             className={`${styles.button} ${styles.insert}`}
           >
             Insert Tail
           </button>
           <button
-            onClick={insertAtIndex}
+            onClick={insertAt}
             className={`${styles.button} ${styles.insert}`}
           >
             Insert @ Index
@@ -166,13 +205,13 @@ export default function DoublyLinkedListVisualizer() {
             Remove Tail
           </button>
           <button
-            onClick={removeAtIndex}
+            onClick={removeAt}
             className={`${styles.button} ${styles.remove}`}
           >
             Remove @ Index
           </button>
           <button
-            onClick={clearList}
+            onClick={clear}
             className={`${styles.button} ${styles.secondary}`}
           >
             Clear
@@ -180,10 +219,42 @@ export default function DoublyLinkedListVisualizer() {
         </div>
       </div>
 
+      <div className={styles.traversal}>
+        <h3>🚀 Traverse the List</h3>
+        <div className={styles.traversalButtons}>
+          <button
+            onClick={handlePrev}
+            className={styles.button}
+            disabled={currentIndex === null || currentIndex === 0}
+          >
+            ⏪ Prev
+          </button>
+          <button
+            onClick={() => setIsPlaying(!isPlaying)}
+            className={styles.button}
+            disabled={currentIndex === null || currentIndex >= items.length - 1}
+          >
+            {isPlaying ? "⏸ Pause" : "▶️ Play"}
+          </button>
+          <button
+            onClick={handleNext}
+            className={styles.button}
+            disabled={currentIndex === null || currentIndex >= items.length - 1}
+          >
+            Next ⏩
+          </button>
+        </div>
+
+        <p>Current Index: {currentIndex !== null ? currentIndex : "None"}</p>
+        <p>
+          Current Value: {currentIndex !== null ? items[currentIndex] : "None"}
+        </p>
+      </div>
+
       <div className={styles.details}>
         <p>
-          <strong>📊 Time Complexity:</strong> Insert O(1), Remove O(1),
-          Search/Access O(n)
+          <strong>📊 Time Complexity:</strong> Insert O(1) at head/tail, O(n) at
+          index; Remove O(1) at head/tail, O(n) at index
         </p>
         <p>
           <strong>📦 Space Complexity:</strong> O(n)
@@ -196,25 +267,26 @@ export default function DoublyLinkedListVisualizer() {
       <section className={styles.info}>
         <h3>🧠 What Is a Doubly Linked List?</h3>
         <p>
-          A doubly linked list is a sequence of nodes where each node contains
-          links to both the previous and next node. This allows for
-          bidirectional traversal.
+          A doubly linked list is a linear data structure where each node
+          maintains references to both the <code>previous</code> and{" "}
+          <code>next</code> nodes.
         </p>
 
-        <h3>📌 When to Use</h3>
-        <ul>
-          <li>Music playlists with next/previous tracks</li>
-          <li>Undo/redo functionality</li>
-          <li>Navigation systems like tab managers or slide decks</li>
-          <li>Deque (double-ended queue) operations</li>
-        </ul>
-
-        <h3>🔍 Reverse Traversal:</h3>
+        <h3>📌 Pointer Behavior</h3>
         <p>
-          {itemsReversed.length > 0
-            ? `Tail → Head: ${itemsReversed.join(" ↔ ")}`
-            : "List is empty"}
+          Each node has two pointers: one pointing to the node before and one to
+          the node after. This enables efficient traversal in both directions.
         </p>
+        <pre className={styles.codeBlock}>
+          {`null ← [A] ↔ [B] ↔ [C] → null`}
+        </pre>
+
+        <h3>📎 When to Use</h3>
+        <ul>
+          <li>Bidirectional navigation (e.g. browser history)</li>
+          <li>Efficient deletions from both ends</li>
+          <li>Deque (double-ended queue) implementation</li>
+        </ul>
       </section>
     </div>
   );

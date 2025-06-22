@@ -4,42 +4,31 @@ import { LinkedList } from "../structures/LinkedList";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./LinkedListVisualizer.module.css";
 
-type Mode = "custom" | "navigation" | "images";
-
 export default function LinkedListVisualizer() {
   const [list] = useState(new LinkedList<string>());
   const [items, setItems] = useState<string[]>([]);
-  const [input, setInput] = useState("");
-  const [mode, setMode] = useState<Mode>("custom");
+  const [value, setValue] = useState("");
+  const [index, setIndex] = useState("");
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const setupDemo = useCallback(
-    (type: Mode) => {
-      list.clear();
-      switch (type) {
-        case "navigation":
-          list.insert("Home");
-          list.insert("About");
-          list.insert("Contact");
-          break;
-        case "images":
-          list.insert("Image 1");
-          list.insert("Image 2");
-          list.insert("Image 3");
-          break;
-        default:
-          list.insert("A");
-          list.insert("B");
-          list.insert("C");
-      }
-      setItems(list.toArray());
-    },
-    [list]
-  );
+  const updateItems = useCallback(() => {
+    setItems(list.toArray());
+  }, [list]);
+
+  const setupDemo = useCallback(() => {
+    list.clear();
+    list.insert("Node A");
+    list.insert("Node B");
+    list.insert("Node C");
+    updateItems();
+    setCurrentIndex(0);
+  }, [list, updateItems]);
 
   useEffect(() => {
-    setupDemo(mode);
-  }, [mode, setupDemo]);
+    setupDemo();
+  }, [setupDemo]);
 
   useEffect(() => {
     if (listRef.current) {
@@ -47,17 +36,80 @@ export default function LinkedListVisualizer() {
     }
   }, [items]);
 
-  const insert = () => {
-    if (input.trim()) {
-      list.insert(input.trim());
-      setItems(list.toArray());
-      setInput("");
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setCurrentIndex((prev) => {
+          if (prev === null || prev >= items.length - 1) {
+            clearInterval(interval);
+            setIsPlaying(false);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, items.length]);
+
+  const insertAtHead = () => {
+    if (value.trim()) {
+      list.insertAtHead(value.trim());
+      setValue("");
+      updateItems();
     }
   };
 
-  const remove = () => {
-    list.remove();
-    setItems(list.toArray());
+  const insertAtTail = () => {
+    if (value.trim()) {
+      list.insert(value.trim());
+      setValue("");
+      updateItems();
+    }
+  };
+
+  const insertAtIndex = () => {
+    const val = value.trim();
+    const i = parseInt(index);
+    if (val && !isNaN(i)) {
+      list.insertAt(i, val);
+      setValue("");
+      setIndex("");
+      updateItems();
+    }
+  };
+
+  const removeHead = () => {
+    list.removeHead();
+    updateItems();
+  };
+
+  const removeTail = () => {
+    list.removeTail();
+    updateItems();
+  };
+
+  const removeAtIndex = () => {
+    const i = parseInt(index);
+    if (!isNaN(i)) {
+      list.removeAt(i);
+      setIndex("");
+      updateItems();
+    }
+  };
+
+  const clearList = () => {
+    list.clear();
+    updateItems();
+    setCurrentIndex(null);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => {
+      if (prev === null) return 0;
+      return Math.min(prev + 1, items.length - 1);
+    });
   };
 
   return (
@@ -66,26 +118,11 @@ export default function LinkedListVisualizer() {
         ← Back to Dashboard
       </Link>
 
-      <h2 className={styles.title}>🔗 Linked List Visualizer</h2>
+      <h2 className={styles.title}>📎 Linked List Visualizer</h2>
       <p className={styles.meta}>
         Java: <code>LinkedList&lt;T&gt;</code> | .NET:{" "}
         <code>LinkedList&lt;T&gt;</code>
       </p>
-
-      <div className="mb-4">
-        <label className="mr-2 font-medium text-sm text-gray-700">
-          Use Case:
-        </label>
-        <select
-          value={mode}
-          onChange={(e) => setMode(e.target.value as Mode)}
-          className="p-1 border rounded"
-        >
-          <option value="custom">Custom</option>
-          <option value="navigation">Navigation History</option>
-          <option value="images">Image Viewer</option>
-        </select>
-      </div>
 
       <div className={styles.listBox} ref={listRef}>
         <AnimatePresence initial={false}>
@@ -97,95 +134,131 @@ export default function LinkedListVisualizer() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className={styles.node}
+              className={`${styles.nodeContainer} ${
+                currentIndex === idx ? styles.highlighted : ""
+              }`}
             >
-              <div>
-                <span className="font-semibold">{val}</span>
-                {idx === 0 && (
-                  <div className="text-xs mt-1 text-blue-100">HEAD</div>
-                )}
-                {idx === items.length - 1 && (
-                  <div className="text-xs mt-1 text-yellow-100">TAIL</div>
-                )}
+              <div className={styles.nodeBox}>
+                <div className={styles.node}>{val}</div>
               </div>
-              {idx < items.length - 1 && (
-                <span className={styles.arrow}>→</span>
-              )}
+              {idx < items.length - 1 && <div className={styles.arrow}>→</div>}
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
 
-      {mode === "custom" && (
-        <div className={styles.controls}>
+      <div className={styles.controls}>
+        <div className={styles.controlRow}>
           <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
             className={styles.input}
-            placeholder="Enter value"
+            placeholder="Value"
+          />
+          <input
+            value={index}
+            onChange={(e) => setIndex(e.target.value)}
+            className={`${styles.input} ${styles.indexInput}`}
+            placeholder="Index"
+            type="number"
           />
           <button
-            onClick={insert}
+            onClick={insertAtHead}
             className={`${styles.button} ${styles.insert}`}
           >
-            Insert
+            Insert Head
           </button>
           <button
-            onClick={remove}
+            onClick={insertAtTail}
+            className={`${styles.button} ${styles.insert}`}
+          >
+            Insert Tail
+          </button>
+          <button
+            onClick={insertAtIndex}
+            className={`${styles.button} ${styles.insert}`}
+          >
+            Insert @ Index
+          </button>
+          <button
+            onClick={removeHead}
             className={`${styles.button} ${styles.remove}`}
           >
-            Remove Last
+            Remove Head
+          </button>
+          <button
+            onClick={removeTail}
+            className={`${styles.button} ${styles.remove}`}
+          >
+            Remove Tail
+          </button>
+          <button
+            onClick={removeAtIndex}
+            className={`${styles.button} ${styles.remove}`}
+          >
+            Remove @ Index
+          </button>
+          <button
+            onClick={clearList}
+            className={`${styles.button} ${styles.secondary}`}
+          >
+            Clear
           </button>
         </div>
-      )}
+      </div>
+
+      <div className={styles.traversal}>
+        <h3>🚀 Traverse the List</h3>
+        <div className={styles.traversalButtons}>
+          <button
+            onClick={() => setIsPlaying(!isPlaying)}
+            className={styles.button}
+            disabled={currentIndex === null || currentIndex >= items.length - 1}
+          >
+            {isPlaying ? "⏸ Pause" : "▶️ Play"}
+          </button>
+          <button
+            onClick={handleNext}
+            className={styles.button}
+            disabled={currentIndex === null || currentIndex >= items.length - 1}
+          >
+            Next ⏩
+          </button>
+        </div>
+        <p>Current Index: {currentIndex !== null ? currentIndex : "None"}</p>
+        <p>
+          Current Value: {currentIndex !== null ? items[currentIndex] : "None"}
+        </p>
+      </div>
 
       <div className={styles.details}>
         <p>
-          <strong>📊 Time Complexity:</strong> Insert O(n), Remove O(n)
+          <strong>📊 Time Complexity:</strong> Insert O(1) at head/tail, O(n) at
+          index; Remove O(1) at head, O(n) at tail/index
         </p>
         <p>
           <strong>📦 Space Complexity:</strong> O(n)
         </p>
         <p>
-          <strong>📈 List Size:</strong> {items.length} node(s)
-        </p>
-        <p>
-          <strong>First Node:</strong> {items[0] ?? "None"} |{" "}
-          <strong>Last Node:</strong> {items[items.length - 1] ?? "None"}
+          <strong>👥 Current Size:</strong> {items.length}
         </p>
       </div>
 
       <section className={styles.info}>
-        <h3>🧠 What Is a Linked List?</h3>
+        <h3>🧠 What Is a Singly Linked List?</h3>
         <p>
-          A linked list stores elements in nodes connected by pointers. Each
-          node points to the next, and you can add or remove elements without
-          shifting memory.
+          A singly linked list is a linear data structure where each element
+          (node) contains a value and a reference to the next node in the
+          sequence.
         </p>
 
-        <h3>📌 When to Use a Linked List</h3>
+        <h3>📌 When to Use</h3>
         <ul>
-          <li>
-            When you need to frequently insert/remove items (esp. from ends)
-          </li>
-          <li>Navigation stacks: "Next" and "Previous" like browser history</li>
-          <li>Dynamic memory where array resizing is expensive</li>
-          <li>Undo/Redo operations in apps</li>
+          <li>When memory is limited and you only need forward traversal</li>
+          <li>Stack-like behavior (LIFO)</li>
+          <li>Queue-like behavior (FIFO)</li>
+          <li>Efficient insertion/removal at head or tail</li>
         </ul>
-
-        <h3>🔍 What You See Above</h3>
-        <p>
-          This simulation shows a{" "}
-          <strong>
-            {mode === "custom"
-              ? "manually updated linked list"
-              : mode === "navigation"
-              ? "web page navigation history"
-              : "photo slideshow with linked transitions"}
-          </strong>
-          . You can track the list’s head and tail, and understand how a linked
-          list stores and transitions values.
-        </p>
       </section>
     </div>
   );
