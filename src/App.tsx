@@ -1,35 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import StackVisualizer from "./dataStructures/StackVisualizer";
+import Dashboard from "./components/Dashboard";
+import QueueVisualizer from "./dataStructures/QueueVisualizer";
+import LinkedListVisualizer from "./dataStructures/LinkedListVisualizer";
+import DoublyLinkedListVisualizer from "./dataStructures/DoubleLinkedListVisualizer";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/stack" element={<StackVisualizer />} />
+      <Route path="/queue" element={<QueueVisualizer />} />
+      <Route path="/linked-list" element={<LinkedListVisualizer />} />
+      <Route
+        path="/doubly-linked-list"
+        element={<DoublyLinkedListVisualizer />}
+      />
+    </Routes>
+  );
 }
 
-export default App
+export default App;

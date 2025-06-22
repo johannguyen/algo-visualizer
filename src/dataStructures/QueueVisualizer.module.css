@@ -1,0 +1,120 @@
+/* src/dataStructures/QueueVisualizer.module.css */
+
+.container {
+  padding: 2rem;
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.backButton {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  background-color: #e5e7eb;
+  color: #111827;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: #d1d5db;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.queueBox {
+  height: 6rem;
+  width: 100%;
+  max-width: 560px;
+  overflow-x: auto;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  background-color: #f0f4f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  scroll-behavior: smooth;
+}
+
+.queueItem {
+  margin: 0 0.5rem;
+  background-color: #10b981;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  min-width: 48px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+.controls {
+  margin-top: 1rem;
+}
+
+.input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  margin-right: 0.5rem;
+  width: 150px;
+  border-radius: 4px;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border: none;
+  color: white;
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.enqueue {
+  background-color: #10b981;
+}
+
+.dequeue {
+  background-color: #ef4444;
+}
+
+.details,
+.info {
+  max-width: 640px;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #374151;
+  margin: 2rem auto 1rem;
+}
+
+.details p {
+  margin: 0.25rem 0;
+}
+
+.info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.info ul {
+  padding-left: 1.25rem;
+}
+
+.info li {
+  margin-bottom: 0.25rem;
+}

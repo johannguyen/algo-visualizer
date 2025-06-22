@@ -1,0 +1,147 @@
+/* src/dataStructures/DoublyLinkedListVisualizer.module.css */
+
+.container {
+  padding: 2rem;
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.backButton {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  background-color: #e5e7eb;
+  color: #111827;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: #d1d5db;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.listBox {
+  display: flex;
+  overflow-x: auto;
+  padding: 1rem;
+  max-width: 90%;
+  margin: 0 auto;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  scroll-behavior: smooth;
+  flex-wrap: nowrap;
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #6366f1;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  margin: 0 0.5rem;
+  min-width: 70px;
+  text-align: center;
+  position: relative;
+}
+
+.arrow {
+  color: #4b5563;
+  margin: 0 0.5rem;
+  font-size: 1.25rem;
+  align-self: center;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.controlRow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  width: 160px;
+  border-radius: 4px;
+}
+
+.indexInput {
+  width: 80px;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.insert {
+  background-color: #6366f1;
+}
+
+.remove {
+  background-color: #ef4444;
+}
+
+.secondary {
+  background-color: #10b981;
+}
+
+.details,
+.info {
+  max-width: 700px;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #374151;
+  margin: 2rem auto 1rem;
+}
+
+.details p {
+  margin: 0.25rem 0;
+}
+
+.info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.info ul {
+  padding-left: 1.25rem;
+}
+
+.info li {
+  margin-bottom: 0.25rem;
+}

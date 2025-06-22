@@ -1,0 +1,39 @@
+/* src/pages/Dashboard.module.css */
+
+.container {
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.5rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: #e0f2fe;
+  border-radius: 0.75rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card:hover {
+  background-color: #bae6fd;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
