@@ -1,0 +1,153 @@
+.container {
+  padding: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+.backButton {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #0070f3;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.meta {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.controls {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 180px;
+}
+
+.button {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #e5e7eb;
+  border: none;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #d1d5db;
+}
+
+.button:disabled {
+  background-color: #d1d5db;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.insert {
+  background-color: #34d399;
+  color: white;
+}
+
+.insert:hover:not(:disabled) {
+  background-color: #10b981;
+}
+
+.remove {
+  background-color: #f87171;
+  color: white;
+}
+
+.remove:hover:not(:disabled) {
+  background-color: #ef4444;
+}
+
+.secondary {
+  background-color: #9ca3af;
+  color: white;
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: #6b7280;
+}
+
+.listBox {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background-color: #f3f4f6;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 1.5rem;
+}
+
+.node {
+  background-color: #60a5fa;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.traversal {
+  margin-top: 2rem;
+  background-color: #eef2ff;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #c7d2fe;
+}
+
+.traversalButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.logBox {
+  font-family: monospace;
+  background-color: #f3f4f6;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-height: 60px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.details {
+  font-size: 0.875rem;
+  color: #444;
+}
+
+.info {
+  margin-top: 2rem;
+  background-color: #fef3c7;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #fcd34d;
+}
+
+.active {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  box-shadow: 0 0 0 2px #60a5fa;
+}

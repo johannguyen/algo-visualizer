@@ -8,6 +8,11 @@ export default function Dashboard() {
     { name: "Queue", path: "/queue" },
     { name: "Linked List", path: "/linked-list" },
     { name: "Doubly Linked List", path: "/doubly-linked-list" },
+    { name: "Deque", path: "/deque" },
+    { name: "HashMap", path: "/hashmap" },
+    { name: "Set", path: "/set" },
+    { name: "Binary Tree", path: "/binary-tree" },
+    { name: "Binary Search Tree", path: "/binary-search-tree" },
   ];
 
   return (
