@@ -9,6 +9,8 @@ import HashMapVisualizer from "./dataStructures/HashMapVisualizer";
 import SetVisualizer from "./dataStructures/SetVisualizer";
 import BinaryTreeVisualizer from "./dataStructures/BinaryTreeVisualizer";
 import BSTVisualizer from "./dataStructures/BSTVisualizer";
+import AVLTreeVisualizer from "./dataStructures/AVLTreeVisualizer";
+import RedBlackTreeVisualizer from "./dataStructures/RedBlackTreeVisualizer";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
       <Route path="/set" element={<SetVisualizer />} />
       <Route path="/binary-tree" element={<BinaryTreeVisualizer />} />
       <Route path="/binary-search-tree" element={<BSTVisualizer />} />
+      <Route path="/avl-tree" element={<AVLTreeVisualizer />} />
+      <Route path="/red-black-tree" element={<RedBlackTreeVisualizer />} />
     </Routes>
   );
 }

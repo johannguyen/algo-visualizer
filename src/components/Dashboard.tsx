@@ -13,6 +13,8 @@ export default function Dashboard() {
     { name: "Set", path: "/set" },
     { name: "Binary Tree", path: "/binary-tree" },
     { name: "Binary Search Tree", path: "/binary-search-tree" },
+    { name: "AVL Tree", path: "/avl-tree" },
+    { name: "Red-Black Tree", path: "/red-black-tree" },
   ];
 
   return (
