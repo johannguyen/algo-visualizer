@@ -1,0 +1,259 @@
+/* src/components/GraphVisualizer.module.css */
+
+/* --- Base Layout & Typography --- */
+.container {
+  padding: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+.backButton {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #0070f3;
+  text-decoration: none;
+  font-weight: bold;
+}
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  color: #111827;
+}
+.meta {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+/* --- Controls & Buttons --- */
+.button {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #e5e7eb;
+  border: none;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+.button:hover:not(:disabled) {
+  background-color: #d1d5db;
+}
+.button:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+.primary {
+  background-color: #3b82f6;
+  color: white;
+}
+.primary:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+.secondary {
+  background-color: #6b7280;
+  color: white;
+}
+.secondary:hover:not(:disabled) {
+    background-color: #4b5563;
+}
+
+
+/* --- Demo Section --- */
+.demoSection {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: #eef2ff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #c7d2fe;
+}
+.demoTitle {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  color: #1f2937;
+}
+.controlsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  align-items: end;
+}
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+.tabContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.25rem;
+  background-color: #fff;
+  padding: 0.25rem;
+  border-radius: 0.375rem;
+  border: 1px solid #ddd;
+}
+.tab {
+  font-size: 0.875rem;
+  padding: 0.3rem 0.5rem;
+  border: none;
+  background-color: transparent;
+  color: #6b7280;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.tab:hover:not(.active) {
+  background-color: #f3f4f6;
+}
+.tab.active {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 500;
+}
+.selectDropdown {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  border-radius: 0.375rem;
+  padding: 0.6rem;
+  font-size: 0.875rem;
+}
+.parameterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+/* --- Main Visualizer Area --- */
+.visualizer {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow: hidden;
+  min-height: 450px;
+}
+.graphSvg {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+/* --- Graph Element Styles --- */
+.graphNode {
+  stroke-width: 2px;
+  transition: all 0.3s ease;
+}
+.nodeLabel, .distanceLabel {
+  font-size: 0.9rem;
+  font-weight: bold;
+  fill: #1f2937;
+  pointer-events: none;
+  text-transform: uppercase;
+  user-select: none;
+}
+.distanceLabel {
+  font-size: 0.8rem;
+  fill: #3b82f6;
+}
+.edgeLine {
+  stroke-width: 3px;
+  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+.edgeWeight {
+  fill: #4b5563;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+/* --- Element States --- */
+.default { fill: #e5e7eb; stroke: #6b7280; }
+.current { fill: #93c5fd; stroke: #2563eb; stroke-width: 4px; }
+.neighbor { fill: #fef08a; stroke: #f59e0b; }
+.visited { fill: #d1d5db; stroke: #6b7280; }
+.subpath { fill: #e9d5ff; stroke: #a855f7; }
+.path { fill: #a7f3d0; stroke: #059669; stroke-width: 4px; }
+
+.edgeLine.default { stroke: #d1d5db; }
+.edgeLine.checking { stroke: #fcd34d; stroke-width: 5px; }
+.edgeLine.subpath { stroke: #c084fc; stroke-width: 4px; }
+.edgeLine.onPath { stroke: #10b981; stroke-width: 5px; }
+
+
+/* --- Step Controls & Logging --- */
+.stepControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  font-weight: 500;
+  color: #374151;
+}
+.queueContainer {
+  margin-bottom: 1.5rem;
+}
+.queueContainer h4 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #374151;
+}
+.queueBox {
+  font-family: monospace;
+  background-color: #f3f4f6;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  min-height: 24px;
+  text-align: center;
+  color: #1f2937;
+  font-weight: 500;
+}
+.detailsBox {
+  margin-bottom: 1.5rem;
+}
+.details {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+  background-color: #fefce8;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #fde047;
+  min-height: 40px;
+  text-align: center;
+}
+.logContainer {
+  margin-top: 1.5rem;
+}
+.logContainer h3 {
+  margin-bottom: 0.5rem;
+}
+.logBox {
+  font-family: monospace;
+  background-color: #111827;
+  color: #e5e7eb;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #374151;
+  min-height: 60px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}

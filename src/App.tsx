@@ -11,6 +11,8 @@ import BinaryTreeVisualizer from "./dataStructures/BinaryTreeVisualizer";
 import BSTVisualizer from "./dataStructures/BSTVisualizer";
 import AVLTreeVisualizer from "./dataStructures/AVLTreeVisualizer";
 import RedBlackTreeVisualizer from "./dataStructures/RedBlackTreeVisualizer";
+import HeapVisualizer from "./dataStructures/HeapVisualizer";
+import GraphVisualizer from "./dataStructures/GraphVisualizer";
 
 function App() {
   return (
@@ -30,6 +32,20 @@ function App() {
       <Route path="/binary-search-tree" element={<BSTVisualizer />} />
       <Route path="/avl-tree" element={<AVLTreeVisualizer />} />
       <Route path="/red-black-tree" element={<RedBlackTreeVisualizer />} />
+      <Route path="/heap" element={<HeapVisualizer />} />
+      <Route path="/graph" element={<GraphVisualizer />} />
+      <Route path="/sorting" element={<div>Sorting Algorithms</div>} />
+      <Route path="/searching" element={<div>Searching Algorithms</div>} />
+      <Route
+        path="/dynamic-programming"
+        element={<div>Dynamic Programming</div>}
+      />
+      <Route path="/backtracking" element={<div>Backtracking</div>} />
+      <Route path="/greedy" element={<div>Greedy Algorithms</div>} />
+      <Route
+        path="/divide-and-conquer"
+        element={<div>Divide and Conquer</div>}
+      />
     </Routes>
   );
 }
