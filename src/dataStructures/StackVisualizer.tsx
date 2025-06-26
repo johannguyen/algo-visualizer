@@ -9,7 +9,6 @@ export default function StackVisualizer() {
   const [items, setItems] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const stackRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     stack.push("A");
     stack.push("B");

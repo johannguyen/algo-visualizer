@@ -17,6 +17,7 @@ export default function Dashboard() {
     { name: "Red-Black Tree", path: "/red-black-tree" },
     { name: "Heap", path: "/heap" },
     { name: "Graph", path: "/graph" },
+    { name: "Hash Table", path: "/hash-table" },
     { name: "Sorting Algorithms", path: "/sorting" },
     { name: "Searching Algorithms", path: "/searching" },
     { name: "Dynamic Programming", path: "/dynamic-programming" },

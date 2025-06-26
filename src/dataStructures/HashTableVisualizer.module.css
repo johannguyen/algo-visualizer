@@ -1,0 +1,377 @@
+/* HashTableVisualizer.module.css */
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 8px 36px 8px;
+}
+
+.backButton {
+  font-size: 1.05rem;
+  color: #3a6be6;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 13px;
+  display: inline-block;
+  transition: color 0.16s;
+  letter-spacing: 0.02em;
+}
+.backButton:hover,
+.backButton:focus {
+  color: #0f2a5b;
+  text-decoration: underline;
+}
+
+.title {
+  font-size: 2.15rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+}
+
+.meta {
+  color: #3a4358;
+  margin-bottom: 18px;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
+}
+
+.demoSection {
+  margin-bottom: 22px;
+  background: linear-gradient(91deg, #f8fafd 80%, #e9f2ff 100%);
+  border-radius: 14px;
+  box-shadow: 0 1px 5px #9db1de1a;
+  padding: 18px 12px 14px 18px;
+}
+
+.demoTitle {
+  font-size: 1.13rem;
+  margin-bottom: 7px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #1d3359;
+}
+
+.controlsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  align-items: flex-end;
+  margin-bottom: 4px;
+}
+
+.controlGroup {
+  display: flex;
+  flex-direction: column;
+  min-width: 175px;
+  flex: 1 1 175px;
+}
+
+.label {
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: #355a91;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+}
+
+.tabContainer {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+
+.tab {
+  border: none;
+  background: #e3e5f3;
+  padding: 6px 18px;
+  border-radius: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1.03rem;
+  color: #1d3359;
+  outline: none;
+  transition: background .19s, color .13s;
+  box-shadow: 0 1px 3px #b4bee533;
+}
+.tab:hover,
+.tab:focus {
+  background: #4777e9;
+  color: #fff;
+}
+.active {
+  background: #4777e9 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 13px #4777e96c;
+}
+
+.selectDropdown {
+  margin-top: 0;
+  padding: 7px 11px;
+  border-radius: 7px;
+  border: 1.5px solid #b9c5de;
+  font-size: 1rem;
+  background: #f7faff;
+  min-width: 120px;
+}
+
+.inputRow {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.input {
+  padding: 6px 12px;
+  border-radius: 7px;
+  border: 1.5px solid #b9c5de;
+  font-size: 1rem;
+  min-width: 100px;
+  background: #f8fbff;
+}
+
+.button {
+  background: #3a6be6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 20px;
+  font-weight: 600;
+  font-size: 1.04rem;
+  cursor: pointer;
+  margin: 0 0 0 6px;
+  box-shadow: 0 2px 8px #4777e935;
+  transition: background 0.17s;
+}
+.button:first-child {
+  margin-left: 0;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 135px;
+}
+
+.datasetInfo {
+  color: #475789;
+  font-size: 0.99rem;
+  margin-top: 2px;
+  background: #f5f7fa;
+  padding: 3px 12px;
+  border-radius: 6px;
+}
+
+.visualizer {
+  background: #f6f9ff;
+  border-radius: 13px;
+  box-shadow: 0 1px 8px #7a99cb13;
+  margin: 20px 0 8px 0;
+  padding: 18px 10px 16px 10px;
+  min-height: 200px;
+  overflow-x: auto;
+}
+
+.hashSvg {
+  width: 100%;
+  max-width: 980px;
+  min-height: 180px;
+}
+
+.bucket {
+  fill: #e9eefa;
+  stroke: #b2bada;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 1px 2px #8ca1e522);
+  transition: stroke 0.18s, fill 0.18s;
+}
+
+.activeBucket {
+  stroke: #ffe672;
+  fill: #fffbe2;
+  filter: drop-shadow(0 0px 14px #ffd40055);
+}
+
+.bucketLabel {
+  font-size: 1.08rem;
+  fill: #4b5a76;
+  font-weight: 600;
+}
+
+.chainBox {
+  fill: #deeaf8;
+  stroke: #a1badb;
+  stroke-width: 1.3px;
+  filter: drop-shadow(0 1px 2px #b0bad755);
+  transition: fill 0.13s, stroke 0.13s;
+  animation: chainIn .35s cubic-bezier(.39,.58,.57,1.29);
+}
+@keyframes chainIn {
+  0% { opacity: 0; transform: translateY(-14px);}
+  100% { opacity: 1; transform: none;}
+}
+
+.highlight {
+  fill: #ffecc6;
+  stroke: #e6a700;
+  stroke-width: 2.2px;
+  animation: highlightFade .35s cubic-bezier(.68,.02,.65,1.38);
+}
+@keyframes highlightFade {
+  0% { fill: #ffb800; }
+  100% { fill: #ffecc6; }
+}
+
+.chainKey {
+  font-size: 1.05rem;
+  fill: #20447d;
+  font-weight: 500;
+  font-family: "JetBrains Mono", "Consolas", "monospace";
+  letter-spacing: 0.01em;
+}
+
+.chainArrow {
+  stroke: #b0bad7;
+  stroke-width: 2.5px;
+  marker-end: url(#arrowhead);
+}
+
+.stepControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0 8px 0;
+}
+
+.detailsBox {
+  margin: 9px 0 13px 0;
+  background: #f0f7ff;
+  border-radius: 7px;
+  padding: 10px 17px;
+  border: 1.5px solid #e8f1ff;
+}
+
+.details {
+  font-size: 1.07rem;
+  font-weight: 500;
+  color: #334a71;
+  letter-spacing: 0.01em;
+}
+
+.logContainer {
+  margin-top: 10px;
+}
+.logBox {
+  background: #fafbfd;
+  border-radius: 6px;
+  padding: 10px;
+  color: #233d5f;
+  font-size: 0.99rem;
+  max-height: 78px;
+  overflow-y: auto;
+  box-shadow: 0 1px 4px #bccff133;
+  border: 1px solid #e6eaf3;
+}
+
+.hashFuncBox {
+  background: #fff7e6;
+  border: 1.5px solid #ffe2a3;
+  border-radius: 7px;
+  font-size: 1.07rem;
+  margin: 9px 0 14px 0;
+  padding: 7px 19px 7px 19px;
+  color: #b88410;
+  box-shadow: 0 1px 7px #ffe3a431;
+}
+
+.hashFuncText {
+  font-family: "JetBrains Mono", "Consolas", "monospace";
+  color: #925b00;
+}
+
+.hashExplain {
+  color: #285dc7;
+  background: #f2f7ff;
+  border-radius: 5px;
+  padding: 4px 13px;
+  margin-top: 8px;
+  font-size: 1.01rem;
+  font-family: "JetBrains Mono", "Consolas", "monospace";
+  border-left: 4px solid #83b7f3;
+}
+
+.controlsBar {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid #e9eef9;
+  margin-bottom: 18px;
+  background: none;
+}
+
+.controlBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 180px;
+  flex: 0 1 250px;
+}
+
+.controlBlock label {
+  font-weight: 600;
+  color: #355a91;
+  font-size: 1.04rem;
+  margin-bottom: 2px;
+  letter-spacing: 0.01em;
+}
+
+.tabsRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.inputRow {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.runDemoBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  min-width: 170px;
+}
+
+.divider {
+  width: 1.5px;
+  height: 34px;
+  background: #e3e9f6;
+  margin: 0 12px;
+  border-radius: 2px;
+  align-self: center;
+  display: block;
+}
+
+@media (max-width: 950px) {
+  .controlsBar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    padding-bottom: 6px;
+  }
+  .divider {
+    display: none;
+  }
+  .runDemoBlock {
+    flex-direction: column;
+    gap: 6px;
+    min-width: unset;
+  }
+}
