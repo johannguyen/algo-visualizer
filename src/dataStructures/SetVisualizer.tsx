@@ -25,7 +25,9 @@ const setDatasets = {
       for (let i = 0; i < v.length; i++) {
         const prev = hash;
         hash = (31 * hash + v.charCodeAt(i)) | 0;
-        steps.push(`step ${i + 1}: 31*${prev} + '${v[i]}'(${v.charCodeAt(i)}) = ${hash}`);
+        steps.push(
+          `step ${i + 1}: 31*${prev} + '${v[i]}'(${v.charCodeAt(i)}) = ${hash}`
+        );
       }
       const absHash = Math.abs(hash);
       return `${steps.join("; ")}; |hash| % ${size} = ${absHash % size}`;
@@ -43,7 +45,9 @@ const setDatasets = {
       for (let i = 0; i < v.length; i++) {
         const prev = hash;
         hash = (31 * hash + v.charCodeAt(i)) | 0;
-        steps.push(`step ${i + 1}: 31*${prev} + '${v[i]}'(${v.charCodeAt(i)}) = ${hash}`);
+        steps.push(
+          `step ${i + 1}: 31*${prev} + '${v[i]}'(${v.charCodeAt(i)}) = ${hash}`
+        );
       }
       const absHash = Math.abs(hash);
       return `${steps.join("; ")}; |hash| % ${size} = ${absHash % size}`;
@@ -54,11 +58,12 @@ const setDatasets = {
 
 type DatasetKey = keyof typeof setDatasets;
 type AlgoKey = "add" | "remove" | "contains";
-const algorithmDetails: Record<AlgoKey, { name: string; needsValue: boolean }> = {
-  add: { name: "Add", needsValue: true },
-  remove: { name: "Remove", needsValue: true },
-  contains: { name: "Check/Contains", needsValue: true },
-};
+const algorithmDetails: Record<AlgoKey, { name: string; needsValue: boolean }> =
+  {
+    add: { name: "Add", needsValue: true },
+    remove: { name: "Remove", needsValue: true },
+    contains: { name: "Check/Contains", needsValue: true },
+  };
 
 const SetVisualizer: React.FC = () => {
   const [datasetKey, setDatasetKey] = useState<DatasetKey>("fruits");
@@ -129,14 +134,13 @@ const SetVisualizer: React.FC = () => {
   const previousStep = () => setStepIndex((i) => Math.max(i - 1, 0));
   const nextStep = () => setStepIndex((i) => Math.min(i + 1, steps.length - 1));
 
-  const currentStep =
-    steps[stepIndex] || {
-      table: setModel.table,
-      bucketIndex: undefined,
-      message: "Ready",
-      highlightValue: "",
-      compareIndices: [],
-    };
+  const currentStep = steps[stepIndex] || {
+    table: setModel.table,
+    bucketIndex: undefined,
+    message: "Ready",
+    highlightValue: "",
+    compareIndices: [],
+  };
 
   const bucketWidth = 108;
   const bucketHeight = 60;
@@ -145,14 +149,19 @@ const SetVisualizer: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <a href="#" className={styles.backButton}>
+      <a href="/" className={styles.backButton}>
         ← Back to Dashboard
       </a>
       <h1 className={styles.title}>CustomSet Visualizer</h1>
       <p className={styles.meta}>
-        Visualize how a CustomSet (like Java's <code>HashSet</code> or Python's <code>set</code>) works, step by step.<br />
-        <strong>Insert:</strong> Only adds unique values.<br />
-        <strong>Check:</strong> Searches within the bucket, comparing each element.<br />
+        Visualize how a CustomSet (like Java's <code>HashSet</code> or Python's{" "}
+        <code>set</code>) works, step by step.
+        <br />
+        <strong>Insert:</strong> Only adds unique values.
+        <br />
+        <strong>Check:</strong> Searches within the bucket, comparing each
+        element.
+        <br />
         <strong>Remove:</strong> Deletes the value if present.
       </p>
       <div className={styles.controlsBar}>
@@ -248,7 +257,8 @@ const SetVisualizer: React.FC = () => {
                     rx={8}
                     className={
                       `${styles.chainBox} ` +
-                      (i === currentStep.bucketIndex && currentStep.compareIndices?.includes(j)
+                      (i === currentStep.bucketIndex &&
+                      currentStep.compareIndices?.includes(j)
                         ? styles.highlight
                         : "")
                     }

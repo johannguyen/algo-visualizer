@@ -14,6 +14,7 @@ import RedBlackTreeVisualizer from "./dataStructures/RedBlackTreeVisualizer";
 import HeapVisualizer from "./dataStructures/HeapVisualizer";
 import GraphVisualizer from "./dataStructures/GraphVisualizer";
 import HashTableVisualizer from "./dataStructures/HashTableVisualizer";
+import SortingVisualizer from "./dataStructures/SortingVisualizer";
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
       <Route path="/heap" element={<HeapVisualizer />} />
       <Route path="/graph" element={<GraphVisualizer />} />
       <Route path="/hash-table" element={<HashTableVisualizer />} />
-      <Route path="/sorting" element={<div>Sorting Algorithms</div>} />
+      <Route path="/sorting" element={<SortingVisualizer />} />
       <Route path="/searching" element={<div>Searching Algorithms</div>} />
       <Route
         path="/dynamic-programming"
